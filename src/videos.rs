@@ -33,8 +33,8 @@ pub fn videos_list(VideosListProps { videos, on_click }: &VideosListProps) -> Ht
 }
 
 #[derive(Properties, PartialEq)]
-struct VideosDetailsProps {
-    video: Video,
+pub struct VideosDetailsProps {
+    pub video: Video,
 }
 
 #[function_component(VideoDetails)]

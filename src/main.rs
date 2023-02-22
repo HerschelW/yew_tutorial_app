@@ -7,6 +7,8 @@ use crate::videos::Video;
 
 // import VideosList function component
 use crate::videos::VideosList;
+// import VideoDetails function component
+use crate::videos::VideoDetails;
 
 #[function_component(App)]
 fn app() -> Html {
@@ -38,14 +40,29 @@ fn app() -> Html {
         },
     ];
 
+    let selected_video = use_state(|| None);
+
+    let on_video_select = {
+        let selected_video = selected_video.clone();
+        Callback::from(move |video: Video| {
+            selected_video.set(Some(video));
+        })
+    };
+
+    let details = selected_video.as_ref().map(|video| {
+        html! {
+            <VideoDetails video={video.clone()} />
+        }
+    });
+
     html! {
         <>
             <h1>{ "RustConf Explorer" }</h1>
             <div>
                 <h3>{"Videos to watch"}</h3>
-                     <VideosList videos={videos} on_click={on_video_select.clone()} />
-                            </div>
-                    { for details }
+              <VideosList videos={videos} on_click={on_video_select} />
+            </div>
+            {for details}
         </>
     }
 }
